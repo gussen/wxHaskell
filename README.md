@@ -1,3 +1,51 @@
+Comments for this clone of wxHaskell
+====================================
+
+Some instructions for use on Windows.
+Install wxWidgets in MSYS2/MinGW64 shell:
+
+```console
+$ pacman -Syu
+$ # Restart MSYS2
+$ pacman -Su
+$ # Restart MSYS2
+$ pacman -S mingw-w64-x86_64-wxmsw3.1
+$
+$ # ln in MSYS2 just makes a copy so it's better
+$ # to use CMD: mklink or PowerShell New-item
+$ ln -s /mingw64/bin/wx-config-3.1 /mingw64/bin/wx-config
+$ ln -s /mingw64/include/wx-3.1 /mingw64/include/wx
+$
+$ # Make a small wxWidgets application and test building it
+$ g++ HelloWorldApp.cpp `wx-config --libs` `wx-config --cxxflags` -o HelloWorldApp
+$ # A lot of dll's must be available to execute it.
+```
+
+Clone and install wxHaskell
+
+```console
+$ git clone git@github.com:gussen/wxHaskell.git
+$ cd wxHaskell
+$
+$ cd .\wxdirect
+$ cabal build
+$ cabal install
+$ cd ..
+$ # Copying 'wxdirect.exe' to 'C:\Users\mg\AppData\Roaming\cabal\bin\wxdirect.exe'
+$
+$ cabal install .\wxc
+$ cabal install .\wxcore
+$ cabal install .\wx
+```
+
+Make a wxHaskell application, e.g. wx_hello, and build it
+
+```console
+$ # Goto the directory where wxHaskell is a subdirectory
+$ git clone git@github.com:gussen/wx_hello.git
+$ cd wx_hello
+$ cabal build
+```
 
 wxHaskell
 =========
@@ -29,4 +77,3 @@ Platform specifics
 
 MacOSX:
 - 20130725: homebrew (http://brew.sh/) does not yet install wxWidgets 2.9.5 (by means of 'brew install wxmac').
-
