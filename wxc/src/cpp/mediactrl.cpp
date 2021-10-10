@@ -4,9 +4,9 @@
  * C wrapper for wxMediaCtrl
  *
  * (C) 2002-2011 wxEiffel and wxHaskell contributors. See contributors.txt
- * 
+ *
  * Licensed under the wxWidgets library license. see LICENSE.
- * 
+ *
  *==============================================================================*/
 
 #include "wrapper.h"
@@ -15,7 +15,7 @@
 #endif
 
 /*-----------------------------------------------------------------------------
-  We want to include the function signatures always -- even on 
+  We want to include the function signatures always -- even on
   systems that don't support MediaCtrl. This means that every function body is
   surrounded by #ifdef wxUSE_MEDIACTRL directives :-(
 -----------------------------------------------------------------------------*/
@@ -73,7 +73,7 @@ EWXWEXPORT(wxMediaCtrl*,wxMediaCtrl_Create)( void* parent, int id,
 #endif
 }
 
-EWXWEXPORT(void,wxMediaCtrl_Delete)(wxMediaCtrl* self)  
+EWXWEXPORT(void,wxMediaCtrl_Delete)(wxMediaCtrl* self)
 {
 #ifdef wxUSE_MEDIACTRL
   if (self) delete self;
@@ -86,6 +86,8 @@ EWXWEXPORT(wxSize*,wxMediaCtrl_GetBestSize)(wxMediaCtrl* self)
   wxSize* sz = new wxSize();
   *sz = self->GetBestSize();
   return sz;
+#else
+  return 0;
 #endif
 }
 
@@ -225,5 +227,3 @@ EWXWEXPORT(wxFileOffset, wxMediaCtrl_Tell) (wxMediaCtrl* self)
 }
 
 }
-
-

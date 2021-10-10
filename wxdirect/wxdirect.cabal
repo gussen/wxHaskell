@@ -14,7 +14,7 @@ description:
 homepage:      https://wiki.haskell.org/WxHaskell
 bug-reports:   https://sourceforge.net/p/wxhaskell/bugs/
 
-cabal-version: >= 1.2
+cabal-version: >= 1.8
 
 build-type:    Simple
 
@@ -28,6 +28,9 @@ library
 
   exposed-modules:
     Application.Wxdirect
+
+  build-depends:
+    base       >= 4     && < 5
 
 executable wxdirect
   main-is: Main.hs

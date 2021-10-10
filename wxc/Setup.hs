@@ -22,7 +22,7 @@ import Distribution.Simple.Setup ( BuildFlags, ConfigFlags
                                  , InstallFlags, installVerbosity
                                  , fromFlag, fromFlagOrDefault, copyDest
                                  )
-import Distribution.Simple.Utils ( die
+import Distribution.Simple.Utils ( die'
                                  , installOrdinaryFile
                                  , IOData(..)
                                  , IODataMode(..)
@@ -88,7 +88,7 @@ rawShellSystemStdInOut :: Verbosity                     -- Verbosity level
                        -> IO (String, String, ExitCode) -- (Command result, Errors, Command exit status)
 rawShellSystemStdInOut v f as =
     rawSystemStdInOut v "sh" (f:as) Nothing Nothing Nothing IODataModeText >>=
-    \(IODataText result, errors, exitStatus) -> return (result, errors, exitStatus)
+    \(result, errors, exitStatus) -> return (result, errors, exitStatus)
 
 isWindowsMsys :: IO Bool
 isWindowsMsys = (buildOS == Windows&&) . isJust <$> lookupEnv "MSYSTEM"
@@ -329,7 +329,7 @@ bitnessMismatch =
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- A list of wxWidgets versions that can be handled by this version of wxHaskell
-wxCompatibleVersions = ["3.0", "2.9"] -- Preferred version first
+wxCompatibleVersions = ["3.1", "3.0", "2.9"] -- Preferred version first
 
 checkWxVersion :: IO String
 checkWxVersion =
@@ -444,7 +444,7 @@ deMsysPaths bi = do
     if b
     then do
         let cor ph = do
-            (IODataText r, e, c ) <- rawSystemStdInOut normal "sh" ["-c", "cd " ++ ph ++ "; pwd -W"] Nothing Nothing Nothing IODataModeText
+            (r, e, c ) <- rawSystemStdInOut normal "sh" ["-c", "cd " ++ ph ++ "; pwd -W"] Nothing Nothing Nothing IODataModeText
             unless (c == ExitSuccess) (putStrLn ("Error: failed to convert MSYS path to native path \n" ++ e) >> exitFailure)
             return . head . lines $ r
         elds  <- mapM cor (extraLibDirs bi)
